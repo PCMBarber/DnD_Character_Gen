@@ -124,7 +124,7 @@
       docker_image:
         name: jenkins:5000/frontend:build-0
         build:
-          path: ../../frontend/
+          path: /home/jenkins/repo/kubernetes/frontend/
         source: build
         state: present
       remote_user: jenkins
@@ -132,7 +132,7 @@
       docker_image:
         name: jenkins:5000/backend:build-0
         build:
-          path: ../../backend/
+          path: /home/jenkins/repo/kubernetes/backend/
         source: build
         state: present
       remote_user: jenkins
@@ -140,7 +140,7 @@
       docker_image:
         name: jenkins:5000/rand1:build-0
         build:
-          path: ../../randapp1/
+          path: /home/jenkins/repo/kubernetes/randapp1/
         source: build
         state: present
       remote_user: jenkins
@@ -148,15 +148,28 @@
       docker_image:
         name: jenkins:5000/rand2:build-0
         build:
-          path: ../../randapp2/
+          path: /home/jenkins/repo/kubernetes/randapp2/
         source: build
         state: present
       remote_user: jenkins
-    - name: Deploy cluster from kubernetes files
+    - name: Deploy secret pod
       shell: |
         sudo su jenkins
         sed -e 's,{MYSQL_PWD},'$MYSQL_PWD',g;' -e 's,{MYSQL_IP},'$MYSQL_IP',g;' /home/jenkins/repo/kubernetes/secret.yaml | kubectl apply -f -
-        kubectl apply -f /home/jenkins/repo/kubernetes/randapp1.yaml
-        kubectl apply -f /home/jenkins/repo/kubernetes/randapp2.yaml
+    - name: Deploy frontend service
+      shell: |
+        sudo su jenkins
         kubectl apply -f /home/jenkins/repo/kubernetes/frontend.yaml
+    - name: Deploy backend service
+      shell: |
+        sudo su jenkins
         kubectl apply -f /home/jenkins/repo/kubernetes/backend.yaml
+    - name: Deploy randapp1 service
+      shell: |
+        sudo su jenkins
+        kubectl apply -f /home/jenkins/repo/kubernetes/randapp1.yaml
+    - name: Deploy randapp2 service
+      shell: |
+        sudo su jenkins
+        kubectl apply -f /home/jenkins/repo/kubernetes/randapp2.yaml
+

@@ -152,10 +152,6 @@
         source: build
         state: present
       remote_user: jenkins
-    - name: Deploy secret pod
-      shell: |
-        sudo su jenkins
-        perl -pe "s/{MYSQL_PWD}/$MYSQL_PWD/g" /home/jenkins/repo/kubernetes/secret.yaml | perl -pe "s/{MYSQL_IP}/$MYSQL_IP/g" - | kubectl apply -f -
     - name: Deploy frontend service
       shell: |
         sudo su jenkins

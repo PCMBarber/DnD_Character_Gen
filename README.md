@@ -91,6 +91,13 @@ source ~/.bashrc
 source ~/.profile
 ```
 
+Finally, deploy the secret pod:
+
+```bash
+git clone <YOUR_REPO>.git
+perl -pe "s/{MYSQL_PWD}/$MYSQL_PWD/g" <PATH_TO_YOUR_REPO>/kubernetes/secret.yaml | perl -pe "s/{MYSQL_IP}/$MYSQL_IP/g" - | kubectl apply -f -
+```
+
 ### Ansible
 
 Back to technology assisted configuration;

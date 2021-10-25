@@ -317,9 +317,7 @@ resource "local_file" "tf_randapp2_yaml" {
 apiVersion: v1
 kind: Secret
 metadata:
-  ...
   name: regcred
-  ...
 data:
   .dockerconfigjson: {"insecure-registries":["${module.ec2.jenk_ip}:5000"]}
 type: kubernetes.io/dockerconfigjson

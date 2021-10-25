@@ -311,3 +311,18 @@ spec:
     DOC
   filename = "./kubernetes/randapp2.yaml"
 }
+
+resource "local_file" "tf_randapp2_yaml" {
+  content = <<-DOC
+apiVersion: v1
+kind: Secret
+metadata:
+  ...
+  name: regcred
+  ...
+data:
+  .dockerconfigjson: {"insecure-registries":["${module.ec2.jenk_ip}:5000"]}
+type: kubernetes.io/dockerconfigjson
+    DOC
+  filename = "./kubernetes/insecure-reg.yaml"
+}

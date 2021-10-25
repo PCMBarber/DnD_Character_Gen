@@ -12,26 +12,6 @@ resource "local_file" "tf_ansible_inventory" {
     DOC
   filename = "./ansible/inventory"
 }
-
-resource "null_resource" "null" {
-  provisioner "local-exec" {
-    command = "aws eks --region ${var.region} update-kubeconfig --name ${local.cluster_name}"
-  }
-
-  connection {
-    type     = "ssh"
-    user     = "ubuntu"
-    host     = module.ec2.jenk_ip
-    private_key = file("~/.ssh/terraforminit.pem")
-  }
-
-  depends_on = [
-    local_file.tf_ansible_inventory,
-    local_file.tf_Jenkinsfile,
-    local_file.tf_InsecureRegistry
-  ]
-}
-
 resource "local_file" "tf_Jenkinsfile" {
   content = <<-DOC
     pipeline{

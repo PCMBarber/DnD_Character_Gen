@@ -5,7 +5,7 @@ resource "aws_instance" "jenkins" {
   key_name                    = var.key_name
   subnet_id                   = var.public_net_id
   associate_public_ip_address = true
-  user_data                   = "${file("user_data_kubectl.sh")}"
+  user_data                   = join("\n","${file("user_data_kubectl.sh")}","echo 'export MYSQL_PWD=${var.db_password}'>>~/.bashrc; echo 'MYSQL_PWD=${var.db_password}'>>~/.profile; echo 'MYSQL_PWD=${var.db_password}'>>/etc/environment;echo 'export MYSQL_IP=${var.nat_ip}'>>~/.bashrc; echo 'MYSQL_IP=${var.nat_ip}'>>~/.profile; echo 'MYSQL_IP=${var.nat_ip}'>>/etc/environment; source ~/.bashrc; source ~/.profile")
 
   tags = {
     Name = "jenkins"

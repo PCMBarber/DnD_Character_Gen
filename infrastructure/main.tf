@@ -85,6 +85,7 @@ module "ec2" {
     subnet_group_name = module.eks.database_subnet_group
     db_password       = var.db_password
     public_net_id     = element(module.eks.public_subnets, 0)
+    nat_ip            = element(module.vpc.nat_public_ips, 0)
 }
 
 locals {

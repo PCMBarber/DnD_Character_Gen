@@ -91,11 +91,21 @@ source ~/.bashrc
 source ~/.profile
 ```
 
-Finally, deploy the secret pod:
+Finally, deploy the initial cluster:
 
 ```bash
+sudo su jenkins
+cd ~
 git clone <YOUR_REPO>.git
-perl -pe "s/{MYSQL_PWD}/$MYSQL_PWD/g" <PATH_TO_YOUR_REPO>/kubernetes/secret.yaml | perl -pe "s/{MYSQL_IP}/$MYSQL_IP/g" - | kubectl apply -f -
+repo_name=<YOUR_REPO_NAME>
+
+perl -pe "s/{MYSQL_PWD}/$MYSQL_PWD/g" ./$repo_name/kubernetes/secret.yaml | perl -pe "s/{MYSQL_IP}/$MYSQL_IP/g" - | kubectl apply -f -
+
+kubectl apply -f ./$repo_name/kubernetes/frontend.yaml
+kubectl apply -f ./$repo_name/kubernetes/backend.yaml
+kubectl apply -f ./$repo_name/kubernetes/randapp1.yaml
+kubectl apply -f ./$repo_name/kubernetes/randapp2.yaml
+kubectl apply -f ./$repo_name/kubernetes/nginx.yaml
 ```
 
 ### Ansible

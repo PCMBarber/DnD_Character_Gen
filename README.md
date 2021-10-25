@@ -85,6 +85,7 @@ SSH onto the `bastion` instance and clone down the updated version of the repo.
 Add some environment variables:
 
 ```bash
+sudo su
 echo 'export MYSQL_PWD=<YOUR_PASSWORD>'>>~/.bashrc
 echo 'MYSQL_PWD=<YOUR_PASSWORD>'>>~/.profile
 echo 'MYSQL_PWD=<YOUR_PASSWORD>'>>/etc/environment

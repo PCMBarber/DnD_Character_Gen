@@ -43,7 +43,6 @@ resource "local_file" "tf_Jenkinsfile" {
                                                 image="${module.ec2.jenk_ip}:5000/frontend:build-$BUILD_NUMBER"
                                                 docker build -t $image /var/lib/jenkins/workspace/$JOB_BASE_NAME/frontend
                                                 docker push $image
-                                                ssh ${module.ec2.prod_ip} -oStrictHostKeyChecking=no  << EOF
                                                 kubectl set image deployment/frontend frontend=$image
                                         '''
                                 }

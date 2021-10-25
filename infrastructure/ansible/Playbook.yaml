@@ -153,9 +153,10 @@
         state: present
       remote_user: jenkins
     - name: Deploy cluster from kubernetes files
-      shell: | 
-        sed -e 's,{MYSQL_PWD},'$MYSQL_PWD',g;' -e 's,{MYSQL_IP},'$MYSQL_IP',g;' /home/jenkins/repo/kubernetes/secret.yaml | kubectl apply --as jenkins -f -
-        kubectl apply --as jenkins -f /home/jenkins/repo/kubernetes/randapp1.yaml
-        kubectl apply --as jenkins -f /home/jenkins/repo/kubernetes/randapp2.yaml
-        kubectl apply --as jenkins -f /home/jenkins/repo/kubernetes/frontend.yaml
-        kubectl apply --as jenkins -f /home/jenkins/repo/kubernetes/backend.yaml
+      shell: |
+      sudo su jenkins
+      sed -e 's,{MYSQL_PWD},'$MYSQL_PWD',g;' -e 's,{MYSQL_IP},'$MYSQL_IP',g;' /home/jenkins/repo/kubernetes/secret.yaml | kubectl apply -f -
+      kubectl apply -f /home/jenkins/repo/kubernetes/randapp1.yaml
+      kubectl apply -f /home/jenkins/repo/kubernetes/randapp2.yaml
+      kubectl apply -f /home/jenkins/repo/kubernetes/frontend.yaml
+      kubectl apply -f /home/jenkins/repo/kubernetes/backend.yaml

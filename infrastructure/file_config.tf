@@ -2,7 +2,7 @@ resource "local_file" "tf_ansible_inventory" {
   content = <<-DOC
     [jenkins]
 
-    ${module.ec2.jenk_ip} ansible_ssh_private_key_file=~/.ssh/terraforminit.pem
+    ${module.ec2.jenk_ip} ansible_ssh_private_key_file=~/.ssh/${var.key_name}.pem
 
     [jenkins:vars]
 

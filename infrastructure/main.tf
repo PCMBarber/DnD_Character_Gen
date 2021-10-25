@@ -29,14 +29,14 @@ module "vpc" {
   default_security_group_name = "pubGroup"
   default_security_group_ingress = [
     {
-      from_port: 22,
-      to_port: 22,
-      cidr_blocks: "0.0.0.0/0"
+      "from_port" = 22,
+      "to_port" = 22,
+      "cidr_blocks" = "0.0.0.0/0"
     }, 
     {
-      from_port: 5000,
-      to_port: 5000,
-      cidr_blocks: "0.0.0.0/0"
+      "from_port" = 5000,
+      "to_port" = 5000,
+      "cidr_blocks" = "0.0.0.0/0"
     }
   ]
   tags = {
@@ -94,7 +94,7 @@ module "ec2" {
     ami_id            = "ami-096cb92bb3580c759"
     instance_type     = "t2.medium"
     av_zone           = "eu-west-2a"
-    key_name          = "terraforminit"
+    key_name          = var.key_name
     sec_group_ids     = module.eks.cluster_security_group_id
     subnet_group_name = module.vpc.database_subnet_group
     db_password       = var.db_password

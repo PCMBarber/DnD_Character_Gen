@@ -12,16 +12,17 @@ It takes in three inputs as environment variables:
 - access_key: **String**
 - secret_key: **String**
 - db_password: **String**
+- key_name: **String**
 
-All pulled from system environment variables named;
+Three pulled from system environment variables named;
 
 - TF_VAR_access_key
 - TF_VAR_secret_key
 - TF_VAR_db_password
 
-You can run all required commands once setting up the environment variables by running:
+The `key_name` variable is set by default to `terraforminit`, you can change this in the variables file.
 
-`NOTE: Don't forget to change the key_name in use in the EC2 module to one you have access to`
+You can run all required commands once setting up the environment variables by running:
 
 ```bash
 cd infrastructure/
@@ -61,9 +62,11 @@ Then, `terraform` will generate some needed files and attempt to push the change
 
 ### Manual Config
 
-Second, you'll have to SSH onto the `jenkins` instance and configure the `aws cli`:
+Second, you'll have to SSH onto the `jenkins` instance and configure the `aws cli` for the jenkins user:
 
 ```bash
+sudo useradd -m jenkins
+sudo su jenkins
 aws configure
 ```
 
@@ -142,8 +145,9 @@ The terraform documentation is very good but not at a beginner level like the re
 
 The only hand made module used was the EC2 module:
 
-The EC2 module is configured to create two EC2 Modules in a public subnet.
-Then, it creates an RDS instance using SQL with the required initial database name
+The EC2 module is configured to create two EC2 instances in a public subnet.
+Then, it creates an RDS instance using SQL with the required initial database name.
+
 ### Inputs
 
 - instance_type: **String**
@@ -169,7 +173,8 @@ With this module our infrastructure looks like this:
 
 ### CI/CD
 
-The `Jenkinsfile` is pretty much the same few commands repeated. so lets take one stage:
+The `Jenkinsfile` is pretty much the same few commands repeated.
+So, lets take one stage:
 
 ```bash
 stage('--Front End--'){
@@ -184,19 +189,19 @@ stage('--Front End--'){
   }
 ```
 
-Firstly, jankins sets a variable called `image`, it creates this string based on this pattern:
+Firstly, jenkins sets a variable called `image`, it creates the value based on this pattern:
 
 ```text
 <Name_Of_Repository>/<Image_Name>:<Version_Tag>
 ```
 
-You'll notice the version tag is being set using a jenkins variable called `BUILD_NUMBER` this variable will change base on the amount of times jenkins has run.
+You'll notice the version tag is being set using a jenkins variable called `BUILD_NUMBER` this variable will change based on the amount of times jenkins has run.
 
 You'll also notice, jenkins is using it's own IP address and port number as the location for the image, this is because ansible has created a docker repository on port 5000.
 
 Next, jenkins builds a new image based on the fresh version of the repo it has automatically cloned.
 Naming the image the way outlined above.
 
-Next, docker pushes the image to it's own repo. (It goes to it's own repo because of how the image was named)
+Then, docker pushes the image to it's own repo. (It goes to it's own repo because of how the image was named)
 
-Finally, the stage interacts with the EKS control plane to update the image of the appropriate service, pulling the image from the repo, saving us the hasstle of transfering images off the jenkins instance.
+Finally, the stage interacts with the EKS control plane to update the image of the appropriate service, pulling the image from the repo, saving us the hassle of transferring images off the jenkins instance.

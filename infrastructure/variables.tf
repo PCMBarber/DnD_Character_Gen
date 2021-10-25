@@ -14,3 +14,7 @@ variable "region" {
   default     = "eu-west-2"
   description = "AWS region"
 }
+variable "key_name" {
+  default     = "terraforminit"
+  description = "instance SSH key"
+}

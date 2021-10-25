@@ -95,7 +95,7 @@ module "ec2" {
 }
 
 locals {
-  cluster_name = "dnd-eks-${random_string.suffix.result}"
+  cluster_name = "dnd-eks"
 }
 
 data "aws_eks_cluster" "cluster" {

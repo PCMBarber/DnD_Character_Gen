@@ -119,3 +119,50 @@ I know people are going to ask, the
 docker-compose is so each image doesn't 
 have to be built seperately by ansible
 ```
+
+## Documentation
+
+This deployment makes use of two very well documented modules provided by Hasicorp. Much more in depth documentation can be found by clicking on either [VPC Module](https://registry.terraform.io/modules/terraform-aws-modules/vpc/aws/latest) or [EKS Module](https://registry.terraform.io/modules/terraform-aws-modules/eks/aws/latest).
+
+### VPC
+
+This use of the VPC Module Creates a `High-Availibility` capable network.
+
+![](./documentation/VPCModule.PNG)
+
+### EKS
+
+The use of the EKS module is a bit more complex.
+For more information on everything eks actually does for us, I'd recomment the AWS documentation website itself, or delving into the GUI of aws and reading what all the options will do for you.
+The terraform documentation is very good but not at a beginner level like the rest of the documentation. a certain amount of understanding is required beforehand.
+
+![](./documentation/EKSModule.PNG)
+
+### EC2
+
+The only hand made module used was the EC2 module:
+
+The EC2 module is configured to create two EC2 Modules in a public subnet.
+Then, it creates an RDS instance using SQL with the required initial database name
+### Inputs
+
+- instance_type: **String**
+- ami_id: **String**
+- security_group: **Security Group ID**
+- public_net_id: **Public Subnet ID**
+- key_name: **String**
+- av_zone: **String**
+- db_password: **String**
+- sec_group_ids: **IDs of Security groups for database**
+- subnet_group_name: **Subnet Group Name**
+- public_net_id: **ID of public subnet to launch instance to**
+- nat_ip: **NAT Gateway IP address**
+
+### Outputs
+
+- bastion_ip: **Public IP of bastion host instance on launch**
+- jenk_ip: **Public IP of jenkins instance on launch**
+
+With this module our infrastructure looks like this:
+
+![](./documentation/FULL.PNG)

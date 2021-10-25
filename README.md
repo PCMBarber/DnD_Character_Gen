@@ -166,3 +166,37 @@ Then, it creates an RDS instance using SQL with the required initial database na
 With this module our infrastructure looks like this:
 
 ![](./documentation/FULL.PNG)
+
+### CI/CD
+
+The `Jenkinsfile` is pretty much the same few commands repeated. so lets take one stage:
+
+```bash
+stage('--Front End--'){
+     steps{
+       sh '''
+               image="<JENKINS-IP-WOULD-BE-HERE>:5000/frontend:build-$BUILD_NUMBER"
+               docker build -t $image /var/lib/jenkins/workspace/$JOB_BASE_NAME/frontend
+               docker push $image
+               kubectl set image deployment/frontend frontend=$image
+       '''
+     }
+  }
+```
+
+Firstly, jankins sets a variable called `image`, it creates this string based on this pattern:
+
+```text
+<Name_Of_Repository>/<Image_Name>:<Version_Tag>
+```
+
+You'll notice the version tag is being set using a jenkins variable called `BUILD_NUMBER` this variable will change base on the amount of times jenkins has run.
+
+You'll also notice, jenkins is using it's own IP address and port number as the location for the image, this is because ansible has created a docker repository on port 5000.
+
+Next, jenkins builds a new image based on the fresh version of the repo it has automatically cloned.
+Naming the image the way outlined above.
+
+Next, docker pushes the image to it's own repo. (It goes to it's own repo because of how the image was named)
+
+Finally, the stage interacts with the EKS control plane to update the image of the appropriate service, pulling the image from the repo, saving us the hasstle of transfering images off the jenkins instance.

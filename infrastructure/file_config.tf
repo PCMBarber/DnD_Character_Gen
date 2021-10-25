@@ -117,3 +117,189 @@ resource "local_file" "tf_InsecureRegistry" {
     DOC
   filename = "./daemon.json"
 }
+
+resource "local_file" "tf_frontend_yaml" {
+  content = <<-DOC
+    apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+spec:
+  type: ClusterIP
+  selector:
+    app: frontend
+  ports:
+  - name: flask
+    port: 5000
+    targetPort: 5000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  labels:
+    app: frontend
+spec:
+  selector:
+    matchLabels:
+      app: frontend
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+      - name: frontend
+        image: ${module.ec2.jenk_ip}:5000/frontend:build-0
+        ports:
+          - containerPort: 5000
+        env:
+        - name: MYSQL_USER
+          valueFrom:
+            secretKeyRef:
+              name: credentials
+              key: MYSQL_USER
+        - name: MYSQL_PWD
+          valueFrom:
+            secretKeyRef:
+              name: credentials
+              key: MYSQL_PWD
+        - name: MYSQL_IP
+          valueFrom:
+            secretKeyRef:
+              name: credentials
+              key: MYSQL_IP
+        - name: MYSQL_DB
+          valueFrom:
+            secretKeyRef:
+              name: credentials
+              key: MYSQL_DB
+        - name: MYSQL_SK
+          valueFrom:
+            secretKeyRef:
+              name: credentials
+              key: MYSQL_SK
+    DOC
+  filename = "./kubernetes/frontend.yaml"
+}
+
+resource "local_file" "tf_backend_yaml" {
+  content = <<-DOC
+    apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+spec:
+  type: ClusterIP
+  selector:
+    app: backend
+  ports:
+  - name: flask
+    port: 5003
+    targetPort: 5003
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  labels:
+    app: backend
+spec:
+  selector:
+    matchLabels:
+      app: backend
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - name: backend
+        image: ${module.ec2.jenk_ip}:5000/backend:build-0
+        ports:
+          - containerPort: 5003
+    DOC
+  filename = "./kubernetes/backend.yaml"
+}
+
+resource "local_file" "tf_randapp1_yaml" {
+  content = <<-DOC
+    apiVersion: v1
+kind: Service
+metadata:
+  name: randapp1
+spec:
+  type: ClusterIP
+  selector:
+    app: randapp1
+  ports:
+  - name: flask
+    port: 5001
+    targetPort: 5001
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: randapp1
+  labels:
+    app: randapp1
+spec:
+  selector:
+    matchLabels:
+      app: randapp1
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: randapp1
+    spec:
+      containers:
+      - name: randapp1
+        image: ${module.ec2.jenk_ip}:5000/rand1:build-0
+        ports:
+          - containerPort: 5001
+    DOC
+  filename = "./kubernetes/randapp1.yaml"
+}
+
+resource "local_file" "tf_randapp2_yaml" {
+  content = <<-DOC
+    apiVersion: v1
+kind: Service
+metadata:
+  name: randapp2
+spec:
+  type: ClusterIP
+  selector:
+    app: randapp2
+  ports:
+  - name: flask
+    port: 5002
+    targetPort: 5002
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: randapp2
+  labels:
+    app: randapp2
+spec:
+  selector:
+    matchLabels:
+      app: randapp2
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: randapp2
+    spec:
+      containers:
+      - name: randapp2
+        image: ${module.ec2.jenk_ip}:5000/rand2:build-0
+        ports:
+          - containerPort: 5002
+    DOC
+  filename = "./kubernetes/randapp2.yaml"
+}

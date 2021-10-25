@@ -127,6 +127,7 @@ Whenever the `Job` triggers, `jenkins` will build new versions of the images, pu
 SSH onto the jenkins instance and execute the following commands, replacing values where necessary:
 
 ```bash
+sudo service docker restart
 sudo su jenkins
 cd ~
 git clone <YOUR_REPO>.git
@@ -134,12 +135,14 @@ repo_name=<YOUR_REPO_NAME>
 
 perl -pe "s/{MYSQL_PWD}/$MYSQL_PWD/g" ./$repo_name/kubernetes/secret.yaml | perl -pe "s/{MYSQL_IP}/$MYSQL_IP/g" - | kubectl apply -f -
 
-docker-compose build
-kubectl apply -f ./$repo_name/kubernetes/frontend.yaml
-kubectl apply -f ./$repo_name/kubernetes/backend.yaml
-kubectl apply -f ./$repo_name/kubernetes/randapp1.yaml
-kubectl apply -f ./$repo_name/kubernetes/randapp2.yaml
-kubectl apply -f ./$repo_name/kubernetes/nginx.yaml
+cd $repo_name
+docker-compose build 
+docker-compose push
+kubectl apply -f ./kubernetes/frontend.yaml
+kubectl apply -f ./kubernetes/backend.yaml
+kubectl apply -f ./kubernetes/randapp1.yaml
+kubectl apply -f ./kubernetes/randapp2.yaml
+kubectl apply -f ./kubernetes/nginx.yaml
 ```
 
 ```text

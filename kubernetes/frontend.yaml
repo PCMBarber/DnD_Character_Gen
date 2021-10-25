@@ -29,7 +29,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: jenkins:5000/frontend:build-0
+        image: 13.40.18.235:5000/frontend:build-0
         ports:
           - containerPort: 5000
         env:

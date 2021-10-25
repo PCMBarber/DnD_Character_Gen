@@ -29,6 +29,6 @@ spec:
     spec:
       containers:
       - name: randapp2
-        image: jenkins:5000/rand2:build-0
+        image: 13.40.18.235:5000/rand2:build-0
         ports:
           - containerPort: 5002

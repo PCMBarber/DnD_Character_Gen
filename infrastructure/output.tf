@@ -21,3 +21,6 @@ output "cluster_name" {
   description = "Kubernetes Cluster Name"
   value       = local.cluster_name
 }
+output "NAT_GATE_IP" {
+  value = element(module.vpc.nat_public_ips,0)
+}

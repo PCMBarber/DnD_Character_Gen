@@ -99,6 +99,12 @@ SSH onto the `bastion` instance and clone down the updated version of the repo
 git clone <YOUR-FORK>.git
 ```
 
+Provide your bastion with the ssh key that can access jenkins. Don't forget to
+
+```bash
+chmod 600 key.pem
+```
+
 `Terraform` should of generated an `inventory` file for you and automatically pushed it up.
 Running the `ansible playbook` should be as easy as:
 

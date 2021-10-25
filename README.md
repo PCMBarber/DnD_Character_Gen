@@ -73,7 +73,7 @@ aws configure
 Next, set up `kubectl` to use the `terraform` generated cluster:
 
 ```bash
-aws eks --region eu-west-2 update-kubeconfig --name <NAME_GENERATED_BY_TERRAFORM>
+aws eks --region eu-west-2 update-kubeconfig --name dnd-eks
 # See outputs for cluster name
 ```
 

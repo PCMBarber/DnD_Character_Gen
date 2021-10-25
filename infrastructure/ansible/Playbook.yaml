@@ -60,7 +60,7 @@
       mode: "0700"
   - name: insecure registry copy file
     copy:
-      src: ~/DND_CHARACTER_GEN/infrastructure/daemon.json
+      src: ~/DnD_Character_Gen/infrastructure/daemon.json
       dest: /etc/docker/daemon.json
       mode: u=rw,g=,o=
   - name: Add jenkins user to docker group

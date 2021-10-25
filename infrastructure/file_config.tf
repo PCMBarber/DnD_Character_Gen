@@ -319,7 +319,7 @@ kind: Secret
 metadata:
   name: regcred
 data:
-  .dockerconfigjson: {"insecure-registries":["${module.ec2.jenk_ip}:5000"]}
+  .dockerconfigjson: "{"insecure-registries":["${module.ec2.jenk_ip}:5000"]}"
 type: kubernetes.io/dockerconfigjson
     DOC
   filename = "./kubernetes/insecure-reg.yaml"

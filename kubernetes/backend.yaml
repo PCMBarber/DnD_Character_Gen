@@ -32,3 +32,5 @@ spec:
         image: 13.40.18.235:5000/backend:build-0
         ports:
           - containerPort: 5003
+      imagePullSecrets:
+      - name: regcred

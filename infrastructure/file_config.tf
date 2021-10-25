@@ -180,6 +180,8 @@ spec:
             secretKeyRef:
               name: credentials
               key: MYSQL_SK
+      imagePullSecrets:
+      - name: regcred
     DOC
   filename = "./kubernetes/frontend.yaml"
 }
@@ -220,6 +222,8 @@ spec:
         image: ${module.ec2.jenk_ip}:5000/backend:build-0
         ports:
           - containerPort: 5003
+      imagePullSecrets:
+      - name: regcred
     DOC
   filename = "./kubernetes/backend.yaml"
 }
@@ -260,6 +264,8 @@ spec:
         image: ${module.ec2.jenk_ip}:5000/rand1:build-0
         ports:
           - containerPort: 5001
+      imagePullSecrets:
+      - name: regcred
     DOC
   filename = "./kubernetes/randapp1.yaml"
 }
@@ -300,6 +306,8 @@ spec:
         image: ${module.ec2.jenk_ip}:5000/rand2:build-0
         ports:
           - containerPort: 5002
+      imagePullSecrets:
+      - name: regcred
     DOC
   filename = "./kubernetes/randapp2.yaml"
 }

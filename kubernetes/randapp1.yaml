@@ -32,3 +32,5 @@ spec:
         image: 13.40.18.235:5000/rand1:build-0
         ports:
           - containerPort: 5001
+      imagePullSecrets:
+      - name: regcred

@@ -26,7 +26,8 @@ module "vpc" {
   create_database_nat_gateway_route = true
   create_database_subnet_group = true
 
-  default_security_group_name = "pubgroup"
+  manage_default_security_group  = true
+  default_security_group_name    = "pubgroup"
   default_security_group_ingress = [
     {
       from_port = 22,

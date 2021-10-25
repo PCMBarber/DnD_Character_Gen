@@ -1,3 +1,51 @@
+resource "local_file" "tf_docker_compose" {
+  content = <<-DOC
+    version: '3.7'
+services:
+    nginx:
+      image: nginx:latest
+      ports:
+        - target: 80
+          published: 80
+          protocol: tcp
+      volumes:
+        - type: bind
+          source: ./nginx/nginx.conf
+          target: /etc/nginx/nginx.conf
+      depends_on:
+        - frontend
+
+    frontend:
+      image: ${module.ec2.jenk_ip}:5000/frontend:build-0
+      build: ./frontend
+      ports:
+        - target: 5000
+          published: 5000
+    
+    service1:
+      image: ${module.ec2.jenk_ip}:5000/rand1:build-0
+      build: ./randapp1
+      ports:
+        - target: 5001
+          published: 5001
+      
+    service2:
+      image: ${module.ec2.jenk_ip}:5000/rand2:build-0
+      build: ./randapp2
+      ports:
+        - target: 5002
+          published: 5002
+
+    backend:
+      image: ${module.ec2.jenk_ip}:5000/backend:build-0
+      build: ./backend
+      ports:
+        - target: 5003
+          published: 5003
+
+    DOC
+  filename = "./docker-compose.yaml"
+}
 resource "local_file" "tf_ansible_inventory" {
   content = <<-DOC
     [jenkins]

@@ -77,11 +77,6 @@ aws eks --region eu-west-2 update-kubeconfig --name dnd-eks
 # See outputs for cluster name
 ```
 
-### Ansible
-
-Back to technology assisted configuration;
-SSH onto the `bastion` instance and clone down the updated version of the repo.
-
 Add some environment variables:
 
 ```bash
@@ -95,6 +90,11 @@ echo 'MYSQL_IP=<NAT_GATEWAY_IP>'>>/etc/environment
 source ~/.bashrc
 source ~/.profile
 ```
+
+### Ansible
+
+Back to technology assisted configuration;
+SSH onto the `bastion` instance and clone down the updated version of the repo.
 
 ```bash
 git clone <YOUR-FORK>.git

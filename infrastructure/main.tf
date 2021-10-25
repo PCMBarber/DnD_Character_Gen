@@ -26,6 +26,19 @@ module "vpc" {
   create_database_nat_gateway_route = true
   create_database_subnet_group = true
 
+  default_security_group_name = "pubGroup"
+  default_security_group_ingress = [
+    {
+      from_port: 22,
+      to_port: 22,
+      cidr_blocks: "0.0.0.0/0"
+    }, 
+    {
+      from_port: 5000,
+      to_port: 5000,
+      cidr_blocks: "0.0.0.0/0"
+    }
+  ]
   tags = {
     "kubernetes.io/cluster/${local.cluster_name}" = "shared"
   }

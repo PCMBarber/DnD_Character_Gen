@@ -155,7 +155,7 @@
     - name: Deploy secret pod
       shell: |
         sudo su jenkins
-        sed -e 's,{MYSQL_PWD},'$MYSQL_PWD',g;' -e 's,{MYSQL_IP},'$MYSQL_IP',g;' /home/jenkins/repo/kubernetes/secret.yaml | kubectl apply -f -
+        perl -pe "s/{MYSQL_PWD}/$MYSQL_PWD/g" /home/jenkins/repo/kubernetes/secret.yaml | perl -pe "s/{MYSQL_IP}/$MYSQL_IP/g" - | kubectl apply -f -
     - name: Deploy frontend service
       shell: |
         sudo su jenkins

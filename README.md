@@ -33,7 +33,9 @@ Terraform will create:
 1 `VPC` containing:
 
 - 3 Public `Subnets` across 3 AV
-- 3 Private `Subnets` across 3 AV
+- 5 Private `Subnets` across 3 AV
+  - 3 For the EKS Node Groups
+  - 2 For the Database
 - 1 `Internet Gateway`
 - 1 `NAT Gateway`
 - All required `Route-Tables`
@@ -70,6 +72,19 @@ Next, set up `kubectl` to use the `terraform` generated cluster:
 ```bash
 aws eks --region eu-west-2 update-kubeconfig --name <NAME_GENERATED_BY_TERRAFORM>
 # See outputs for cluster name
+```
+
+Add some environment variables:
+
+```bash
+echo 'export MYSQL_PWD=<YOUR_PASSWORD>'>>~/.bashrc
+echo 'MYSQL_PWD=<YOUR_PASSWORD>'>>~/.profile
+echo 'MYSQL_PWD=<YOUR_PASSWORD>'>>/etc/environment
+echo 'export MYSQL_IP=<NAT_GATEWAY_IP>'>>~/.bashrc
+echo 'MYSQL_IP=<NAT_GATEWAY_IP>'>>~/.profile
+echo 'MYSQL_IP=<NAT_GATEWAY_IP>'>>/etc/environment
+source ~/.bashrc
+source ~/.profile
 ```
 
 ### Ansible

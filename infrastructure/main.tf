@@ -19,6 +19,7 @@ module "vpc" {
   azs                  = ["eu-west-2a", "eu-west-2b", "eu-west-2c"]
   private_subnets      = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
   public_subnets       = ["10.0.4.0/24", "10.0.5.0/24", "10.0.6.0/24"]
+  database_subnets     = ["10.0.7.0/24", "10.0.8.0/24"]
   enable_nat_gateway   = true
   single_nat_gateway   = true
   enable_dns_hostnames = true
@@ -86,6 +87,11 @@ module "ec2" {
     db_password       = var.db_password
     public_net_id     = element(module.vpc.public_subnets, 0)
     nat_ip            = element(module.vpc.nat_public_ips, 0)
+
+    depends_on = [
+      module.eks,
+      module.vpc
+    ]
 }
 
 locals {

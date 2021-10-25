@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block body_content %}
+    <h3>Race: {{ user.race }}   Class: {{ user.char_class }}</h3>
+    <h5>Max Health: {{ user.health }}</h5>
+    <br>
+    <h5>Strength: {{ user.strength }}</h5>
+    <h5>Dexterity: {{ user.dexterity }}</h5>
+    <h5>Constitution: {{ user.constitution }}</h5>
+    <h5>Intelligence: {{ user.intelligence }}</h5>
+    <h5>Wisdom: {{ user.wisdom }}</h5>
+    <h5>Charisma: {{ user.charisma }}</h5>
+    <br>
+    <h4>Background: {{ user.background }}</h4>
+    <h4>Feat: {{ feat.name }}</h4>
+    <h3>{{ feat.effects }}</h3>
+{% endblock body_content %}

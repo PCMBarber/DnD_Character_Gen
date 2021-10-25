@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+{% block body_content %}
+    <h1>Welcome to D&D Character Generator</h1>
+    {% for user in users %}
+        <h3>{{ user.char_name }}</h3>
+        <a href="{{ url_for('login', char_name=user.char_name) }}">Login</a>
+        <br>
+    {% endfor %}
+{% endblock body_content %}

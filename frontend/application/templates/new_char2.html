@@ -1,0 +1,96 @@
+{% extends "layout.html" %}
+{% block body_content %}
+    <h2>Please rank your skills from most important (1) to least important (6)</h2>
+    <div class="form">
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+                {{ form.strength.label }}
+                {% if form.strength.errors %}
+                    {{ form.strength }}
+                    <div class="error">
+                        {% for error in form.strength.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.strength }}
+                {% endif %}
+            </div>
+            <br>
+            <div class="form-group">
+                {{ form.dexterity.label }}
+                {% if form.dexterity.errors %}
+                    {{ form.dexterity }}
+                    <div class="error">
+                        {% for error in form.dexterity.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.dexterity }}
+                {% endif %}
+            </div>
+            <br>
+            <div class="form-group">
+                    {{ form.constitution.label }}
+                    {% if form.constitution.errors %}
+                        {{ form.constitution }}
+                        <div class="error">
+                            {% for error in form.constitution.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.constitution }}
+                    {% endif %}
+            </div>
+            <br>
+            <div class="form-group">
+                {{ form.intelligence.label }}
+                {% if form.intelligence.errors %}
+                    {{ form.intelligence }}
+                    <div class="error">
+                        {% for error in form.intelligence.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.intelligence }}
+                {% endif %}
+            </div>
+            <br>
+            <div class="form-group">
+                {{ form.wisdom.label }}
+                {% if form.wisdom.errors %}
+                    {{ form.wisdom }}
+                    <div class="error">
+                        {% for error in form.wisdom.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.wisdom }}
+                {% endif %}
+            </div>
+            <br>
+            <div class="form-group">
+                {{ form.charisma.label }}
+                {% if form.charisma.errors %}
+                    {{ form.charisma }}
+                    <div class="error">
+                        {% for error in form.charisma.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.charisma }}
+                {% endif %}
+            </div>
+            <br>
+            <div class="form-group">
+                {{ form.submit }}
+            </div>
+        </form>
+    </div>
+{% endblock body_content %}

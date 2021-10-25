@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block body_content %}
+    <h2>{{ char_name }}</h2>
+    <br>
+    {% for feat in feats %}
+        <div>
+            <h3>{{ feat.name }}:        {{ feat.effects }}</h3>
+            <a href="{{ url_for('submit', feat=feat.id, char_name=char_name, race=race, char_class=char_class, strength=strength, dexterity=dexterity, constitution=constitution, intelligence=intelligence, wisdom=wisdom, charisma=charisma) }}">Choose This Feat</a>
+        </div>
+        <br>
+    {% endfor %}
+{% endblock body_content %}

@@ -1,0 +1,131 @@
+- name: Install Docker
+  hosts: jenkins
+  become: true
+  tasks:
+  - name: jenkins user
+    user:
+      name: jenkins
+      shell: /bin/bash
+  - name: prerequisites
+    apt:
+      pkg:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - gnupg2
+      - software-properties-common
+      - python3-pip
+      - git
+      state: latest
+      update_cache: true
+  - name: docker
+    pip:
+      name: docker
+  - name: json
+    pip:
+      name: jsondiff
+  - name: requests
+    pip:
+      name: requests
+  - name: yaml
+    pip:
+      name: pyyaml
+  - name: compose
+    pip:
+      name: docker-compose
+  - name: docker gpg key
+    apt_key:
+      url: "https://download.docker.com/linux/debian/gpg"
+      state: present
+  - name: docker apt repo
+    apt_repository:
+      repo: "deb [arch=amd64] https://download.docker.com/linux/debian stretch stable"
+      state: present
+  - name: docker install
+    apt:
+      pkg:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      state: latest
+      update_cache: true
+  - name: docker service
+    service:
+      name: docker
+      state: started
+  - name: insecure registry create Dir
+    file:
+      path: /etc/docker/
+      state: directory
+      mode: "0700"
+  - name: insecure registry copy file
+    copy:
+      src: ~/DND_CHARACTER_GEN/infrastructure/daemon.json
+      dest: /etc/docker/daemon.json
+      mode: u=rw,g=,o=
+  - name: Add jenkins user to docker group
+    user:
+      name: jenkins
+      comment: docker-jenk
+      group: docker
+
+- name: Install Jenkins
+  hosts: jenkins
+  become: true
+  tasks:
+    - name: Install Java
+      apt:
+        name: openjdk-8-jdk
+        state: present
+        update_cache: yes
+    - name: Download Jenkins Key
+      apt_key:
+        url: https://pkg.jenkins.io/debian/jenkins.io.key
+        state: present
+    - name: Import Jenkins Repo
+      apt_repository:
+        repo: deb http://pkg.jenkins.io/debian-stable binary/
+        state: present
+    - name: Apt Install Jenkins 
+      apt:
+        name: jenkins
+        state: present
+        update_cache: yes
+    - name: Start & Enable Jenkins
+      systemd:
+        name: jenkins
+        state: started
+        enabled: true
+    - name: Sleep for 15 seconds and continue with play
+      wait_for: timeout=15
+    - name: Get init password Jenkins
+      shell: cat /var/lib/jenkins/secrets/initialAdminPassword
+      changed_when: false
+      register: result
+    - name: Print init password Jenkins
+      debug:
+        var: result.stdout
+    - name: Create a docker registry
+      docker_container:
+        name: registry
+        image: registry:2
+        ports:
+          - "5000:5000"
+
+- name: kubernetes cluster deploy
+  hosts: jenkins
+  become: true
+  tasks:
+    - name: Git clone project
+      git:
+        repo: 'https://github.com/PCMBarber/DnD_Character_Gen.git'
+        dest: /home/jenkins/repo
+    - name: Build docker images
+      docker_compose:
+        project_src: /home/jenkins/repo
+        build: yes
+      remote_user: jenkins
+    - name: Deploy cluster from kubernetes files
+      shell: | 
+        kubectl apply -f ~/repo/kubernetes/
+      remote_user: jenkins

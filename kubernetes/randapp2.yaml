@@ -1,0 +1,34 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: randapp2
+spec:
+  type: ClusterIP
+  selector:
+    app: randapp2
+  ports:
+  - name: flask
+    port: 5002
+    targetPort: 5002
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: randapp2
+  labels:
+    app: randapp2
+spec:
+  selector:
+    matchLabels:
+      app: randapp2
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: randapp2
+    spec:
+      containers:
+      - name: randapp2
+        image: jenkins:5000/rand2:build-0
+        ports:
+          - containerPort: 5002

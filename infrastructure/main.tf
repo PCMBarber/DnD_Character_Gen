@@ -41,6 +41,12 @@ module "vpc" {
       cidr_blocks = "0.0.0.0/0"
       protocol = "tcp"
     },
+    {
+      from_port = 8080,
+      to_port = 8080,
+      cidr_blocks = "0.0.0.0/0"
+      protocol = "tcp"
+    },
   ]
   default_security_group_egress = [
     {

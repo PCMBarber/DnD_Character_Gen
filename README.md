@@ -91,23 +91,6 @@ source ~/.bashrc
 source ~/.profile
 ```
 
-Finally, deploy the initial cluster:
-
-```bash
-sudo su jenkins
-cd ~
-git clone <YOUR_REPO>.git
-repo_name=<YOUR_REPO_NAME>
-
-perl -pe "s/{MYSQL_PWD}/$MYSQL_PWD/g" ./$repo_name/kubernetes/secret.yaml | perl -pe "s/{MYSQL_IP}/$MYSQL_IP/g" - | kubectl apply -f -
-
-kubectl apply -f ./$repo_name/kubernetes/frontend.yaml
-kubectl apply -f ./$repo_name/kubernetes/backend.yaml
-kubectl apply -f ./$repo_name/kubernetes/randapp1.yaml
-kubectl apply -f ./$repo_name/kubernetes/randapp2.yaml
-kubectl apply -f ./$repo_name/kubernetes/nginx.yaml
-```
-
 ### Ansible
 
 Back to technology assisted configuration;
@@ -141,10 +124,28 @@ Simply set up a new `Job` to pull from the repository and look for a `Jenkinsfil
 
 Whenever the `Job` triggers, `jenkins` will build new versions of the images, push them to the `artifact repository` (held on the `jenkins` instance) and then, perform a rolling update on the deployment.
 
+SSH onto the jenkins instance and execute the following commands, replacing values where necessary:
+
+```bash
+sudo su jenkins
+cd ~
+git clone <YOUR_REPO>.git
+repo_name=<YOUR_REPO_NAME>
+
+perl -pe "s/{MYSQL_PWD}/$MYSQL_PWD/g" ./$repo_name/kubernetes/secret.yaml | perl -pe "s/{MYSQL_IP}/$MYSQL_IP/g" - | kubectl apply -f -
+
+docker-compose build
+kubectl apply -f ./$repo_name/kubernetes/frontend.yaml
+kubectl apply -f ./$repo_name/kubernetes/backend.yaml
+kubectl apply -f ./$repo_name/kubernetes/randapp1.yaml
+kubectl apply -f ./$repo_name/kubernetes/randapp2.yaml
+kubectl apply -f ./$repo_name/kubernetes/nginx.yaml
+```
+
 ```text
 I know people are going to ask, the 
 docker-compose is so each image doesn't 
-have to be built seperately by ansible
+have to be built seperately
 ```
 
 ## Documentation

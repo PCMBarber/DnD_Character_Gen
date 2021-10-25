@@ -36,7 +36,7 @@ resource "aws_db_instance" "DnD" {
   username               = "root"
   password               = var.db_password
   db_subnet_group_name   = var.subnet_group_name
-  vpc_security_group_ids = var.sec_group_ids
+  vpc_security_group_ids = [var.sec_group_ids]
   parameter_group_name   = "default.mysql5.7"
   publicly_accessible    = false
   skip_final_snapshot    = true

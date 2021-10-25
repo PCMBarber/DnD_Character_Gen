@@ -154,7 +154,7 @@
       remote_user: jenkins
     - name: Deploy cluster from kubernetes files
       shell: | 
-        sed -e 's,{{MYSQL_PWD}},'{{ ansible_env.MYSQL_PWD }}',g;' -e 's,{{MYSQL_IP}},'{{ ansible_env.MYSQL_IP }}',g;' ~/repo/kubernetes/secrets.yaml | kubectl apply -f -
+        sed -e 's,\{{MYSQL_PWD}},'$MYSQL_PWD',g;' -e 's,\{{MYSQL_IP}},'$MYSQL_IP',g;' ~/repo/kubernetes/secrets.yaml | kubectl apply -f -
         kubectl apply -f ~/repo/kubernetes/randapp1.yaml
         kubectl apply -f ~/repo/kubernetes/randapp2.yaml
         kubectl apply -f ~/repo/kubernetes/frontend.yaml

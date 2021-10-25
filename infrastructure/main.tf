@@ -82,7 +82,7 @@ module "ec2" {
     av_zone           = "eu-west-2a"
     key_name          = "terraforminit"
     sec_group_ids     = module.eks.cluster_security_group_id
-    subnet_group_name = module.eks.database_subnet_group
+    subnet_group_name = module.vpc.database_subnet_group
     db_password       = var.db_password
     public_net_id     = element(module.eks.public_subnets, 0)
     nat_ip            = element(module.vpc.nat_public_ips, 0)

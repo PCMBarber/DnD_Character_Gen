@@ -318,7 +318,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: regcred
-data:
+stringData:
   .dockerconfigjson: "{"insecure-registries":["${module.ec2.jenk_ip}:5000"]}"
 type: kubernetes.io/dockerconfigjson
     DOC

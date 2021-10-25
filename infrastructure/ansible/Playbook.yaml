@@ -124,32 +124,32 @@
       docker_image:
         name: jenkins:5000/frontend:build-0
         build:
-          path: ../../frontend/Dockerfile
-          source: build
+          path: ../../frontend/
+        source: build
         state: present
       remote_user: jenkins
     - name: build backend image
       docker_image:
         name: jenkins:5000/backend:build-0
         build:
-          path: ../../backend/Dockerfile
-          source: build
+          path: ../../backend/
+        source: build
         state: present
       remote_user: jenkins
     - name: build rand app 1 image
       docker_image:
         name: jenkins:5000/rand1:build-0
         build:
-          path: ../../randapp1/Dockerfile
-          source: build
+          path: ../../randapp1/
+        source: build
         state: present
       remote_user: jenkins
     - name: build rand app 2 image
       docker_image:
         name: jenkins:5000/rand2:build-0
         build:
-          path: ../../randapp2/Dockerfile
-          source: build
+          path: ../../randapp2/
+        source: build
         state: present
       remote_user: jenkins
     - name: Deploy cluster from kubernetes files

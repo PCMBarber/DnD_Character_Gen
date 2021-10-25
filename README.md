@@ -114,7 +114,7 @@ cd ./infrastructure/ansible
 ansible-playbook -i inventory Playbook.yaml
 ```
 
-`Ansible` will install `Docker`, `Jenkins`, configure an `artifact repository` and, launch the initial version of the app.
+`Ansible` will install `Docker`, `Jenkins` and, configure an `artifact repository`.
 
 ### Kubernetes
 

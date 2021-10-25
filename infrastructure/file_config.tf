@@ -1,6 +1,6 @@
 resource "local_file" "tf_docker_compose" {
   content = <<-DOC
-    version: '3.7'
+version: '3.7'
 services:
     nginx:
       image: nginx:latest
@@ -110,7 +110,6 @@ resource "local_file" "tf_Jenkinsfile" {
 
 resource "local_file" "tf_InsecureRegistry" {
   content = <<-DOC
-
 {
         "insecure-registries":["${module.ec2.jenk_ip}:5000"]
 }
@@ -120,7 +119,7 @@ resource "local_file" "tf_InsecureRegistry" {
 
 resource "local_file" "tf_frontend_yaml" {
   content = <<-DOC
-    apiVersion: v1
+apiVersion: v1
 kind: Service
 metadata:
   name: frontend
@@ -188,7 +187,7 @@ spec:
 
 resource "local_file" "tf_backend_yaml" {
   content = <<-DOC
-    apiVersion: v1
+apiVersion: v1
 kind: Service
 metadata:
   name: backend
@@ -230,7 +229,7 @@ spec:
 
 resource "local_file" "tf_randapp1_yaml" {
   content = <<-DOC
-    apiVersion: v1
+apiVersion: v1
 kind: Service
 metadata:
   name: randapp1
@@ -272,7 +271,7 @@ spec:
 
 resource "local_file" "tf_randapp2_yaml" {
   content = <<-DOC
-    apiVersion: v1
+apiVersion: v1
 kind: Service
 metadata:
   name: randapp2
@@ -310,17 +309,4 @@ spec:
       - name: regcred
     DOC
   filename = "./kubernetes/randapp2.yaml"
-}
-
-resource "local_file" "tf_randapp2_yaml" {
-  content = <<-DOC
-apiVersion: v1
-kind: Secret
-metadata:
-  name: regcred
-type: kubernetes.io/dockerconfigjson
-data:
-  .dockerconfigjson: {BASE_64_JSON}
-    DOC
-  filename = "./kubernetes/insecure-reg.yaml"
 }

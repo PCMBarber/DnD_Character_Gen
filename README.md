@@ -135,7 +135,7 @@ repo_name=<YOUR_REPO_NAME>
 
 perl -pe "s/{MYSQL_PWD}/$MYSQL_PWD/g" ./$repo_name/kubernetes/secret.yaml | perl -pe "s/{MYSQL_IP}/$MYSQL_IP/g" - | kubectl apply -f -
 
-perl -pe "s/{BASE_64_JSON}/${cat ./$repo_name/infrastructure/daemon.json | base64 -w0}/g" ./$repo_name/kubernetes/insecure-reg.yaml | kubectl apply -f -
+perl -pe "s/{BASE_64_JSON}/$(cat ./$repo_name/infrastructure/daemon.json | base64 -w0)/g" ./$repo_name/kubernetes/insecure-reg.yaml | kubectl apply -f -
 
 cd $repo_name
 docker-compose build 

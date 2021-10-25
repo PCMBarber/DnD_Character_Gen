@@ -3,5 +3,5 @@ kind: Secret
 metadata:
   name: regcred
 type: kubernetes.io/dockerconfigjson
-stringData:
-  .dockerconfigjson: "{"insecure-registries":["13.40.18.235:5000"]}"
+data:
+  .dockerconfigjson: {BASE_64_JSON}

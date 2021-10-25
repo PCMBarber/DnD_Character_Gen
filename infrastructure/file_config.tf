@@ -319,8 +319,8 @@ kind: Secret
 metadata:
   name: regcred
 type: kubernetes.io/dockerconfigjson
-stringData:
-  .dockerconfigjson: "{"insecure-registries":["${module.ec2.jenk_ip}:5000"]}"
+data:
+  .dockerconfigjson: {BASE_64_JSON}
     DOC
   filename = "./kubernetes/insecure-reg.yaml"
 }

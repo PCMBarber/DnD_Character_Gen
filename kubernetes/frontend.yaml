@@ -29,7 +29,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: stratcastor:5000/frontend:build-0
+        image: stratcastor/frontend:build-0
         ports:
           - containerPort: 5000
         env:

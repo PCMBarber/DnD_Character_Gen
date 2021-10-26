@@ -16,28 +16,28 @@ services:
         - frontend
 
     frontend:
-      image: ${var.docker_user}:5000/frontend:build-0
+      image: ${var.docker_user}/frontend:build-0
       build: ./frontend
       ports:
         - target: 5000
           published: 5000
     
     service1:
-      image: ${var.docker_user}:5000/rand1:build-0
+      image: ${var.docker_user}/rand1:build-0
       build: ./randapp1
       ports:
         - target: 5001
           published: 5001
       
     service2:
-      image: ${var.docker_user}:5000/rand2:build-0
+      image: ${var.docker_user}/rand2:build-0
       build: ./randapp2
       ports:
         - target: 5002
           published: 5002
 
     backend:
-      image: ${var.docker_user}:5000/backend:build-0
+      image: ${var.docker_user}/backend:build-0
       build: ./backend
       ports:
         - target: 5003
@@ -65,7 +65,7 @@ resource "local_file" "tf_Jenkinsfile" {
                         stage('--Front End--'){
                                 steps{
                                         sh '''
-                                                image="${var.docker_user}:5000/frontend:build-$BUILD_NUMBER"
+                                                image="${var.docker_user}/frontend:build-$BUILD_NUMBER"
                                                 docker build -t $image /var/lib/jenkins/workspace/$JOB_BASE_NAME/frontend
                                                 docker push $image
                                                 kubectl set image deployment/frontend frontend=$image
@@ -75,7 +75,7 @@ resource "local_file" "tf_Jenkinsfile" {
                         stage('--Service1--'){
                                 steps{
                                         sh '''
-                                                image="${var.docker_user}:5000/rand1:build-$BUILD_NUMBER"
+                                                image="${var.docker_user}/rand1:build-$BUILD_NUMBER"
                                                 docker build -t $image /var/lib/jenkins/workspace/$JOB_BASE_NAME/randapp1
                                                 docker push $image
                                                 kubectl set image deployment/randapp1 randapp1=$image
@@ -85,7 +85,7 @@ resource "local_file" "tf_Jenkinsfile" {
                         stage('--Service2--'){
                                 steps{
                                         sh '''
-                                                image="${var.docker_user}:5000/rand2:build-$BUILD_NUMBER"
+                                                image="${var.docker_user}/rand2:build-$BUILD_NUMBER"
                                                 docker build -t $image /var/lib/jenkins/workspace/$JOB_BASE_NAME/randapp2
                                                 docker push $image
                                                 kubectl set image deployment/randapp2 randapp2=$image
@@ -95,7 +95,7 @@ resource "local_file" "tf_Jenkinsfile" {
                         stage('--Back End--'){
                                 steps{
                                         sh '''
-                                                image="${var.docker_user}:5000/backend:build-$BUILD_NUMBER"
+                                                image="${var.docker_user}/backend:build-$BUILD_NUMBER"
                                                 docker build -t $image /var/lib/jenkins/workspace/$JOB_BASE_NAME/backend
                                                 docker push $image
                                                 kubectl set image deployment/backend backend=$image
@@ -150,7 +150,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: ${var.docker_user}:5000/frontend:build-0
+        image: ${var.docker_user}/frontend:build-0
         ports:
           - containerPort: 5000
         env:
@@ -218,7 +218,7 @@ spec:
     spec:
       containers:
       - name: backend
-        image: ${var.docker_user}:5000/backend:build-0
+        image: ${var.docker_user}/backend:build-0
         ports:
           - containerPort: 5003
       imagePullSecrets:
@@ -260,7 +260,7 @@ spec:
     spec:
       containers:
       - name: randapp1
-        image: ${var.docker_user}:5000/rand1:build-0
+        image: ${var.docker_user}/rand1:build-0
         ports:
           - containerPort: 5001
       imagePullSecrets:
@@ -302,7 +302,7 @@ spec:
     spec:
       containers:
       - name: randapp2
-        image: ${var.docker_user}:5000/rand2:build-0
+        image: ${var.docker_user}/rand2:build-0
         ports:
           - containerPort: 5002
       imagePullSecrets:

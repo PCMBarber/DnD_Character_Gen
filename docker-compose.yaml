@@ -14,28 +14,28 @@ services:
         - frontend
 
     frontend:
-      image: stratcastor:5000/frontend:build-0
+      image: stratcastor/frontend:build-0
       build: ./frontend
       ports:
         - target: 5000
           published: 5000
     
     service1:
-      image: stratcastor:5000/rand1:build-0
+      image: stratcastor/rand1:build-0
       build: ./randapp1
       ports:
         - target: 5001
           published: 5001
       
     service2:
-      image: stratcastor:5000/rand2:build-0
+      image: stratcastor/rand2:build-0
       build: ./randapp2
       ports:
         - target: 5002
           published: 5002
 
     backend:
-      image: stratcastor:5000/backend:build-0
+      image: stratcastor/backend:build-0
       build: ./backend
       ports:
         - target: 5003

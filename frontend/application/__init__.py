@@ -7,7 +7,7 @@ from aws_xray_sdk.core import xray_recorder
 from aws_xray_sdk.ext.flask.middleware import XRayMiddleware
 
 def Load_Data(file_name):
-    data = genfromtxt(file_name, delimiter=',', skip_header=1, converters={0: lambda s: str(s)})
+    data = genfromtxt(file_name, delimiter=',', skip_header=0, converters={0: lambda s: str(s)})
     return data.tolist()
 
 app = Flask(__name__)

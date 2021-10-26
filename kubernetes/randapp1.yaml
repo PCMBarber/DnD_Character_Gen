@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: randapp1
+  name: service1
 spec:
   type: ClusterIP
   selector:
-    app: randapp1
+    app: service1
   ports:
   - name: flask
     port: 5001
@@ -14,23 +14,21 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: randapp1
+  name: service1
   labels:
-    app: randapp1
+    app: service1
 spec:
   selector:
     matchLabels:
-      app: randapp1
+      app: service1
   replicas: 3
   template:
     metadata:
       labels:
-        app: randapp1
+        app: service1
     spec:
       containers:
-      - name: randapp1
+      - name: service1
         image: stratcastor/rand1:build-0
         ports:
           - containerPort: 5001
-      imagePullSecrets:
-      - name: regcred

@@ -32,5 +32,3 @@ spec:
         image: stratcastor/backend:build-0
         ports:
           - containerPort: 5003
-      imagePullSecrets:
-      - name: regcred

@@ -17,7 +17,7 @@ pipeline{
                                             image="stratcastor/rand1:build-$BUILD_NUMBER"
                                             docker build -t $image /var/lib/jenkins/workspace/$JOB_BASE_NAME/randapp1
                                             docker push $image
-                                            kubectl set image deployment/randapp1 randapp1=$image
+                                            kubectl set image deployment/service1 randapp1=$image
                                     '''
                             }
                     }
@@ -27,7 +27,7 @@ pipeline{
                                             image="stratcastor/rand2:build-$BUILD_NUMBER"
                                             docker build -t $image /var/lib/jenkins/workspace/$JOB_BASE_NAME/randapp2
                                             docker push $image
-                                            kubectl set image deployment/randapp2 randapp2=$image
+                                            kubectl set image deployment/service2 randapp2=$image
                                     '''
                             }
                     }

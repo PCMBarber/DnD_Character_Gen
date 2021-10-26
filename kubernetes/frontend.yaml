@@ -58,5 +58,3 @@ spec:
             secretKeyRef:
               name: credentials
               key: MYSQL_SK
-      imagePullSecrets:
-      - name: regcred

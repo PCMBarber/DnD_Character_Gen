@@ -44,7 +44,7 @@ services:
           published: 5003
 
     DOC
-  filename = "./docker-compose.yaml"
+  filename = "../docker-compose.yaml"
 }
 resource "local_file" "tf_ansible_inventory" {
   content = <<-DOC

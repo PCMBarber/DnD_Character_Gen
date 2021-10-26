@@ -13,6 +13,7 @@ It takes in three inputs as environment variables:
 - secret_key: **String**
 - db_password: **String**
 - key_name: **String**
+- docker_user: **String**
 
 Three pulled from system environment variables named;
 
@@ -20,7 +21,7 @@ Three pulled from system environment variables named;
 - TF_VAR_secret_key
 - TF_VAR_db_password
 
-The `key_name` variable is set by default to `terraforminit`, you can change this in the variables file.
+The `key_name` variable is set by default to `terraforminit` and, docker_user defaults to mine: `stratcastor` you can change these in the variables file.
 
 You can run all required commands once setting up the environment variables by running:
 
@@ -209,7 +210,7 @@ So, lets take one stage:
 stage('--Front End--'){
      steps{
        sh '''
-               image="<JENKINS-IP-WOULD-BE-HERE>:5000/frontend:build-$BUILD_NUMBER"
+               image="<YOUR-GITHUBUSERNAME>/frontend:build-$BUILD_NUMBER"
                docker build -t $image /var/lib/jenkins/workspace/$JOB_BASE_NAME/frontend
                docker push $image
                kubectl set image deployment/frontend frontend=$image
@@ -226,7 +227,7 @@ Firstly, jenkins sets a variable called `image`, it creates the value based on t
 
 You'll notice the version tag is being set using a jenkins variable called `BUILD_NUMBER` this variable will change based on the amount of times jenkins has run.
 
-You'll also notice, jenkins is using it's own IP address and port number as the location for the image, this is because ansible has created a docker repository on port 5000.
+You'll also notice, jenkins is using your terraform set docker username as the location for the image, this is because we will pull the images from dockerhub.
 
 Next, jenkins builds a new image based on the fresh version of the repo it has automatically cloned.
 Naming the image the way outlined above.

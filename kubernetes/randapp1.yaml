@@ -29,7 +29,7 @@ spec:
     spec:
       containers:
       - name: randapp1
-        image: 3.10.22.20:5000/rand1:build-0
+        image: stratcastor:5000/rand1:build-0
         ports:
           - containerPort: 5001
       imagePullSecrets:

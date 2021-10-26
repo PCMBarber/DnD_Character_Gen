@@ -63,6 +63,10 @@
       src: ~/DnD_Character_Gen/infrastructure/daemon.json
       dest: /etc/docker/daemon.json
       mode: u=rw,g=,o=
+  - name: docker service
+    service:
+      name: docker
+      state: restarted
   - name: Add jenkins user to docker group
     user:
       name: jenkins
@@ -112,3 +116,4 @@
         state: started
         ports:
           - "5000:5000"
+        restart: yes

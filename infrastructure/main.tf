@@ -91,11 +91,29 @@ module "eks" {
       name                          = "worker-group-1"
       instance_type                 = "t2.small"
       asg_desired_capacity          = 2
+      additional_user_data          = <<-EOF
+#!/bin/bash
+rm -f /etc/systemd/system/docker.service.d/docker.conf
+echo "[Service]
+
+ExecStart=/usr/bin/dockerd -H fd:// --insecure-registry=${module.ec2.jenk_ip}:5000" >> /etc/systemd/system/docker.service.d/docker.conf
+systemctl daemon-reload
+systemctl restart docker
+EOF
       additional_security_group_ids = [aws_security_group.worker_group_mgmt_one.id]
     },
     {
       name                          = "worker-group-2"
       instance_type                 = "t2.medium"
+      additional_user_data          = <<-EOF
+#!/bin/bash
+rm -f /etc/systemd/system/docker.service.d/docker.conf
+echo "[Service]
+
+ExecStart=/usr/bin/dockerd -H fd:// --insecure-registry=${module.ec2.jenk_ip}:5000" >> /etc/systemd/system/docker.service.d/docker.conf
+systemctl daemon-reload
+systemctl restart docker
+EOF
       additional_security_group_ids = [aws_security_group.worker_group_mgmt_two.id]
       asg_desired_capacity          = 1
     },
@@ -109,14 +127,13 @@ module "ec2" {
     instance_type     = "t2.medium"
     av_zone           = "eu-west-2a"
     key_name          = var.key_name
-    sec_group_ids     = module.eks.cluster_security_group_id
+    sec_group_ids     = aws_security_group.rds.id
     subnet_group_name = module.vpc.database_subnet_group
     db_password       = var.db_password
     public_net_id     = element(module.vpc.public_subnets, 0)
     nat_ip            = element(module.vpc.nat_public_ips, 0)
 
     depends_on = [
-      module.eks,
       module.vpc
     ]
 }

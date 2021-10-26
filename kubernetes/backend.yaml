@@ -29,7 +29,7 @@ spec:
     spec:
       containers:
       - name: backend
-        image: 3.10.22.20:5000/backend:build-0
+        image: stratcastor:5000/backend:build-0
         ports:
           - containerPort: 5003
       imagePullSecrets:

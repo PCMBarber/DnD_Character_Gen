@@ -18,3 +18,7 @@ variable "key_name" {
   default     = "terraforminit"
   description = "instance SSH key"
 }
+variable "docker_user" {
+  default     = "stratcastor"
+  description = "instance SSH key"
+}

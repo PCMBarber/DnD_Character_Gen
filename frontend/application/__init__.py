@@ -27,19 +27,18 @@ from application import models
 db.create_all()
 
 try:
-        file_name = "../feats.csv"
-        data = Load_Data(file_name) 
-
-        for i in data:
-            record = feat(**{
-                'id' : i[0],
-                'name' : i[1],
-                'effects' : i[2],
-                'skillmodify' : i[3]
-            })
-            db.session.add(record)
-            db.session.commit()
-    except:
-        db.session.rollback()
+    file_name = "../feats.csv"
+    data = Load_Data(file_name) 
+    for i in data:
+        record = feat(**{
+            'id' : i[0],
+            'name' : i[1],
+            'effects' : i[2],
+            'skillmodify' : i[3]
+        })
+        db.session.add(record)
+        db.session.commit()
+except:
+    db.session.rollback()
 
 from application import routes

@@ -11,14 +11,14 @@ app.config['SECRET_KEY'] = getenv('MYSQL_SK')
 
 db = SQLAlchemy(app)
 
-from application import models
-
-db.create_all()
-
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 
 xray_recorder.configure(service='My application')
 XRayMiddleware(app, xray_recorder)
+
+from application import models
+
+db.create_all()
 
 from application import routes

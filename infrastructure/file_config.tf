@@ -182,7 +182,7 @@ spec:
       imagePullSecrets:
       - name: regcred
     DOC
-  filename = "./kubernetes/frontend.yaml"
+  filename = "../kubernetes/frontend.yaml"
 }
 
 resource "local_file" "tf_backend_yaml" {
@@ -224,7 +224,7 @@ spec:
       imagePullSecrets:
       - name: regcred
     DOC
-  filename = "./kubernetes/backend.yaml"
+  filename = "../kubernetes/backend.yaml"
 }
 
 resource "local_file" "tf_randapp1_yaml" {
@@ -266,7 +266,7 @@ spec:
       imagePullSecrets:
       - name: regcred
     DOC
-  filename = "./kubernetes/randapp1.yaml"
+  filename = "../kubernetes/randapp1.yaml"
 }
 
 resource "local_file" "tf_randapp2_yaml" {
@@ -308,5 +308,5 @@ spec:
       imagePullSecrets:
       - name: regcred
     DOC
-  filename = "./kubernetes/randapp2.yaml"
+  filename = "../kubernetes/randapp2.yaml"
 }

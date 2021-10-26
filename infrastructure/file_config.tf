@@ -78,7 +78,7 @@ resource "local_file" "tf_Jenkinsfile" {
                                                 image="${var.docker_user}/rand1:build-$BUILD_NUMBER"
                                                 docker build -t $image /var/lib/jenkins/workspace/$JOB_BASE_NAME/randapp1
                                                 docker push $image
-                                                kubectl set image deployment/randapp1 randapp1=$image
+                                                kubectl set image deployment/service1 randapp1=$image
                                         '''
                                 }
                         }
@@ -88,7 +88,7 @@ resource "local_file" "tf_Jenkinsfile" {
                                                 image="${var.docker_user}/rand2:build-$BUILD_NUMBER"
                                                 docker build -t $image /var/lib/jenkins/workspace/$JOB_BASE_NAME/randapp2
                                                 docker push $image
-                                                kubectl set image deployment/randapp2 randapp2=$image
+                                                kubectl set image deployment/service2 randapp2=$image
                                         '''
                                 }
                         }
@@ -179,8 +179,6 @@ spec:
             secretKeyRef:
               name: credentials
               key: MYSQL_SK
-      imagePullSecrets:
-      - name: regcred
     DOC
   filename = "../kubernetes/frontend.yaml"
 }
@@ -221,8 +219,6 @@ spec:
         image: ${var.docker_user}/backend:build-0
         ports:
           - containerPort: 5003
-      imagePullSecrets:
-      - name: regcred
     DOC
   filename = "../kubernetes/backend.yaml"
 }
@@ -232,11 +228,11 @@ resource "local_file" "tf_randapp1_yaml" {
 apiVersion: v1
 kind: Service
 metadata:
-  name: randapp1
+  name: service1
 spec:
   type: ClusterIP
   selector:
-    app: randapp1
+    app: service1
   ports:
   - name: flask
     port: 5001
@@ -245,26 +241,24 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: randapp1
+  name: service1
   labels:
-    app: randapp1
+    app: service1
 spec:
   selector:
     matchLabels:
-      app: randapp1
+      app: service1
   replicas: 3
   template:
     metadata:
       labels:
-        app: randapp1
+        app: service1
     spec:
       containers:
-      - name: randapp1
+      - name: service1
         image: ${var.docker_user}/rand1:build-0
         ports:
           - containerPort: 5001
-      imagePullSecrets:
-      - name: regcred
     DOC
   filename = "../kubernetes/randapp1.yaml"
 }
@@ -274,11 +268,11 @@ resource "local_file" "tf_randapp2_yaml" {
 apiVersion: v1
 kind: Service
 metadata:
-  name: randapp2
+  name: service2
 spec:
   type: ClusterIP
   selector:
-    app: randapp2
+    app: service2
   ports:
   - name: flask
     port: 5002
@@ -287,26 +281,24 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: randapp2
+  name: service2
   labels:
-    app: randapp2
+    app: service2
 spec:
   selector:
     matchLabels:
-      app: randapp2
+      app: service2
   replicas: 3
   template:
     metadata:
       labels:
-        app: randapp2
+        app: service2
     spec:
       containers:
-      - name: randapp2
+      - name: service2
         image: ${var.docker_user}/rand2:build-0
         ports:
           - containerPort: 5002
-      imagePullSecrets:
-      - name: regcred
     DOC
   filename = "../kubernetes/randapp2.yaml"
 }

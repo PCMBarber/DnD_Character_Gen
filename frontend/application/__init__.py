@@ -9,6 +9,7 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = ("mysql+pymysql://" + getenv('MYSQL_USER') + ":" + getenv('MYSQL_PWD') + "@" + getenv('MYSQL_IP') + "/" + getenv('MYSQL_DB'))
 app.config['SECRET_KEY'] = getenv('MYSQL_SK')
 
+from application import models
 db = SQLAlchemy(app)
 
 db.create_all()

@@ -84,9 +84,9 @@ sudo su
 echo 'export MYSQL_PWD=<YOUR_PASSWORD>'>>~/.bashrc
 echo 'MYSQL_PWD=<YOUR_PASSWORD>'>>~/.profile
 echo 'MYSQL_PWD=<YOUR_PASSWORD>'>>/etc/environment
-echo 'export MYSQL_IP=<NAT_GATEWAY_IP>'>>~/.bashrc
-echo 'MYSQL_IP=<NAT_GATEWAY_IP>'>>~/.profile
-echo 'MYSQL_IP=<NAT_GATEWAY_IP>'>>/etc/environment
+echo 'export MYSQL_IP=<RDS_ENDPOINT>'>>~/.bashrc
+echo 'MYSQL_IP=<RDS_ENDPOINT>'>>~/.profile
+echo 'MYSQL_IP=<RDS_ENDPOINT>'>>/etc/environment
 source ~/.bashrc
 source ~/.profile
 ```
@@ -129,6 +129,7 @@ SSH onto the jenkins instance and execute the following commands, replacing valu
 ```bash
 sudo service docker restart
 sudo su jenkins
+docker login -u "<YOUR_USERNAME>" -p "<YOUR_PASSWORD>" docker.io
 cd ~
 git clone <YOUR_REPO>.git
 repo_name=<YOUR_REPO_NAME>

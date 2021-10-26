@@ -196,6 +196,7 @@ Then, it creates an RDS instance using SQL with the required initial database na
 
 - bastion_ip: **Public IP of bastion host instance on launch**
 - jenk_ip: **Public IP of jenkins instance on launch**
+- db_ip: **DNS Address of RDS instance on launch**
 
 With this module our infrastructure looks like this:
 

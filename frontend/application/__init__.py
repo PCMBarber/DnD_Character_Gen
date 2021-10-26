@@ -38,8 +38,7 @@ try:
                 'skillmodify' : i[3]
             })
             db.session.add(record)
-
-        db.session.commit()
+            db.session.commit()
     except:
         db.session.rollback()
 

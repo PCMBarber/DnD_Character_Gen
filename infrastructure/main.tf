@@ -91,29 +91,11 @@ module "eks" {
       name                          = "worker-group-1"
       instance_type                 = "t2.small"
       asg_desired_capacity          = 2
-      additional_user_data          = <<-EOF
-#!/bin/bash
-rm -f /etc/systemd/system/docker.service.d/docker.conf
-echo "[Service]
-
-ExecStart=/usr/bin/dockerd -H fd:// --insecure-registry=${module.ec2.jenk_ip}:5000" >> /etc/systemd/system/docker.service.d/docker.conf
-systemctl daemon-reload
-systemctl restart docker
-EOF
       additional_security_group_ids = [aws_security_group.worker_group_mgmt_one.id]
     },
     {
       name                          = "worker-group-2"
       instance_type                 = "t2.medium"
-      additional_user_data          = <<-EOF
-#!/bin/bash
-rm -f /etc/systemd/system/docker.service.d/docker.conf
-echo "[Service]
-
-ExecStart=/usr/bin/dockerd -H fd:// --insecure-registry=${module.ec2.jenk_ip}:5000" >> /etc/systemd/system/docker.service.d/docker.conf
-systemctl daemon-reload
-systemctl restart docker
-EOF
       additional_security_group_ids = [aws_security_group.worker_group_mgmt_two.id]
       asg_desired_capacity          = 1
     },

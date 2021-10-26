@@ -27,7 +27,7 @@ from application import models
 db.create_all()
 
 try:
-        file_name = "feats.csv"
+        file_name = "../feats.csv"
         data = Load_Data(file_name) 
 
         for i in data:

@@ -1,4 +1,4 @@
-# DnD_Character_Gen Hahaha hackerman
+# DnD_Character_Gen
 
 Full deployment making use of `terraform`, `ansible`, `docker` and, `kubernetes`.
 
@@ -7,7 +7,7 @@ Full deployment making use of `terraform`, `ansible`, `docker` and, `kubernetes`
 ### Terraform
 
 First, terraform needs to initilise the eks cluster.
-It takes in three inputs as environment variables:
+It takes in these inputs as variables:
 
 - access_key: **String**
 - secret_key: **String**

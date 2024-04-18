@@ -211,7 +211,7 @@ So, lets take one stage:
 stage('--Front End--'){
      steps{
        sh '''
-               image="<YOUR-GITHUBUSERNAME>/frontend:build-$BUILD_NUMBER"
+               image="<YOUR-DOCKERHUBUSERNAME>/frontend:build-$BUILD_NUMBER"
                docker build -t $image /var/lib/jenkins/workspace/$JOB_BASE_NAME/frontend
                docker push $image
                kubectl set image deployment/frontend frontend=$image

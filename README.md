@@ -90,6 +90,7 @@ echo 'MYSQL_IP=<RDS_ENDPOINT>'>>~/.profile
 echo 'MYSQL_IP=<RDS_ENDPOINT>'>>/etc/environment
 source ~/.bashrc
 source ~/.profile
+exit
 ```
 
 ### Ansible
@@ -166,7 +167,7 @@ This use of the VPC Module Creates a `High-Availibility` capable network.
 ### EKS
 
 The use of the EKS module is a bit more complex.
-For more information on everything eks actually does for us, I'd recomment the AWS documentation website itself, or delving into the GUI of aws and reading what all the options will do for you.
+For more information on everything eks actually does for us, I'd recommend the AWS documentation website itself, or delving into the GUI of AWS and reading what all the options will do for you.
 The terraform documentation is very good but not at a beginner level like the rest of the documentation. a certain amount of understanding is required beforehand.
 
 ![](./documentation/EKSModule.PNG)

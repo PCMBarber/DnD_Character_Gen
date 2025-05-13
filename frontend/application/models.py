@@ -15,7 +15,7 @@ class user(db.Model, UserMixin):
     background = db.Column(db.String(30), nullable=False)
     feats = db.Column(db.String(100), nullable=False)
     password = db.Column(db.String(250), nullable=False)
-
+ 
     def __repr__(self):
         return ''.join(['Char ID: ', str(self.id), '\r\n',
             'Name: ', self.char_name, '\r\n',

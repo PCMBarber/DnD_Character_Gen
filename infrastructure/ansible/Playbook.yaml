@@ -9,9 +9,9 @@
   - name: prerequisites
     apt:
       pkg:
-      - apt-transport-https
+      - apt-transport-https 
       - ca-certificates
-      - curl
+      - curl 
       - gnupg2
       - software-properties-common
       - python3-pip

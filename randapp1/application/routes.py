@@ -15,4 +15,4 @@ def roll():
     rolls.sort(reverse = True)
     bin = rolls.pop()
     bin = rolls.pop()
-    return jsonify({"1":rolls[0],"2":rolls[1],"3":rolls[2],"4":rolls[3],"5":rolls[4], "6":rolls[5]})
+    return jsonify({"1":rolls[0],"2":rolls[1],"3":rolls[2],"4":rolls[3],"5":rolls[4], "6":rolls[5]}) 

@@ -6,4 +6,4 @@ output "jenk_ip" {
 }
 output "db_ip" {
   value = element(split(":",aws_db_instance.DnD.endpoint),0)
-}
+} 

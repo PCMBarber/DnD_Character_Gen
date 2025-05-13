@@ -20,7 +20,7 @@ resource "aws_security_group" "worker_group_mgmt_one" {
       "0.0.0.0/0",
     ]
   }
-}
+} 
 
 resource "aws_security_group" "worker_group_mgmt_two" {
   name_prefix = "worker_group_mgmt_two"

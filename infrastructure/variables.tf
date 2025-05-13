@@ -21,4 +21,4 @@ variable "key_name" {
 variable "docker_user" {
   default     = "stratcastor"
   description = "instance SSH key"
-}
+} 

@@ -9,4 +9,4 @@ def background():
     backgrounds=['Acolyte','Charlatan','Criminal / Spy','Entertainer','Folk Hero','Gladiator','Guild Artisan / Guild Merchant','Knight','Noble','Pirate','Sage','Soldier','Urchin']
     choice=random.choice(backgrounds)
 
-    return jsonify({"Background":choice})
+    return jsonify({"Background":choice}) 

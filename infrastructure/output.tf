@@ -24,4 +24,4 @@ output "cluster_name" {
 output "DB_Public_IP" {
   description = "RDS Instance Public IP"
   value       = module.ec2.db_ip
-}
+} 

@@ -8,4 +8,4 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
-ENTRYPOINT [ "python", "app.py" ]
+ENTRYPOINT [ "python", "app.py" ] 

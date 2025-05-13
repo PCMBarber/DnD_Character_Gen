@@ -13,7 +13,7 @@ provider "kubernetes" {
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
   version = "3.2.0"
-
+ 
   name                 = "dnd-vpc"
   cidr                 = "10.0.0.0/16"
   azs                  = ["eu-west-2a", "eu-west-2b", "eu-west-2c"]

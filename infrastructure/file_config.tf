@@ -15,7 +15,7 @@ services:
       depends_on:
         - frontend
 
-    frontend:
+    frontend: 
       image: ${var.docker_user}/frontend:build-0
       build: ./frontend
       ports:

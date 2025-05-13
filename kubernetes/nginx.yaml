@@ -12,7 +12,7 @@ spec:
     targetPort: 80
 ---
 apiVersion: apps/v1
-kind: Deployment
+kind: Deployment 
 metadata:
   name: nginx
 spec:
@@ -20,7 +20,7 @@ spec:
     matchLabels:
       app: nginx
   replicas: 3
-  template:
+  template: 
     metadata:
       labels:
         app: nginx

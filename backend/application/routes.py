@@ -11,7 +11,7 @@ def back_end():
     "3":request.get_json()["3"],"4":request.get_json()["4"],
     "5":request.get_json()["5"],"6":request.get_json()["6"]}
 
-    sort=[]
+    sort=[] 
 
     for skill in skills:
         for key in dice:

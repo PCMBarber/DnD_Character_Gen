@@ -8,7 +8,7 @@ from application.models import user, feat
 
 
 class TestBase(TestCase):
-
+ 
     def create_app(self):
 
         # pass in test configurations

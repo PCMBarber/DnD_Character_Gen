@@ -8,3 +8,4 @@ xray_recorder.configure(service='My application')
 XRayMiddleware(app, xray_recorder)
 
 from application import routes
+ 

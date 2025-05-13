@@ -6,4 +6,4 @@ variable "sec_group_ids" {}
 variable "subnet_group_name" {}
 variable "db_password" {}
 variable "public_net_id" {}
-variable "nat_ip" {}
+variable "nat_ip" {} 

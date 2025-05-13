@@ -10,7 +10,7 @@ resource "aws_instance" "jenkins" {
   tags = {
     Name = "jenkins"
   }
-}
+} 
 
 resource "aws_instance" "bastion" {
   ami                         = var.ami_id 

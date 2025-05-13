@@ -17,7 +17,7 @@ def home():
 def login(char_name):
     if current_user.is_authenticated:
         return redirect(url_for('home'))
-    form = LoginForm()
+    form = LoginForm() 
     if form.validate_on_submit():
         userfound = user.query.filter_by(char_name=char_name).first()
         if userfound and pw.verify_password(userfound.password, form.password.data):

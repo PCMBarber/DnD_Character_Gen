@@ -16,7 +16,7 @@ class NewChar1(FlaskForm):
     char_name = StringField('Character name: ',
         validators=[DataRequired(message=None), Length(min=2, max=30)
         ]    
-    )
+    ) 
     race = SelectField(
         'Race: ',
         choices=[            
